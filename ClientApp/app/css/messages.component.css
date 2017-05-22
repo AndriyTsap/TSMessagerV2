@@ -1,0 +1,155 @@
+.main_section{
+    height: calc(100vh - 100px);
+}
+
+.member_list .chat-body {
+    margin-left: 47px;
+    margin-top: 0;
+}
+.member_list .contact_sec {
+    margin-top: 3px;
+}
+.member_list li {
+    padding: 6px;
+}
+.chat-img img {
+    height: 34px;
+    width: 34px;
+}
+.member_list li {
+    border-bottom: 1px solid #dddddd;
+    padding: 6px;
+}
+.member_list li:last-child {
+    border-bottom:none;
+}
+@media (max-width: 768px) {
+        #custom-search-input .search-query, .member_list,.message_section{
+            border-radius: 5px;
+        }
+        .input-group{
+            display: block;
+        }
+}
+@media (min-width: 768px) {
+    .member_list {
+        height: calc(100vh - 133px);
+    }
+    #custom-search-input .search-query {
+        border-radius: 0px;
+        border-top-left-radius: 5px ;
+
+    }
+    
+    .member_list,.message_section{
+        border-radius: 0px;
+    }
+    .member_list {
+        border-bottom-left-radius: 5px;
+    }
+    .message_section{
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+
+    }
+}
+
+.member_list { 
+    max-height: calc(100vh - 132px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid #dddddd;
+}
+
+.message_section {
+    border: 1px solid #dddddd;
+}
+.chat_sidebar{
+    height:100%;
+}
+.chat_area {
+    float: left;
+    height: calc(100vh - 248px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+}
+.chat_area li {
+    padding: 4px 14px 0;
+}
+.chat_area li .chat-img1 img {
+    height: 40px;
+    width: 40px;
+}
+.chat_area .chat-body1 {
+    margin-left: 50px;
+}
+.chat-body1 p {
+    background: #eef none repeat scroll 0 0;
+    padding: 10px;
+    width: 100%;
+}
+.chat_area .admin_chat .chat-body1 {
+    margin-left: 0;
+    margin-right: 50px;
+}
+.chat_area li:last-child {
+    padding-bottom: 10px;
+}
+.message_write {
+    background: #f5f3f3 none repeat scroll 0 0;
+    float: left;
+    padding: 15px;
+    width: 100%;
+}
+
+.message_write textarea.form-control {
+    height: 70px;
+    padding: 10px;
+}
+.chat_bottom {
+    float: left;
+    margin-top: 13px;
+    width: 100%;
+}
+.upload_btn {
+    color: #777777;
+}
+.sub_menu_ > li a, .sub_menu_ > li {
+    float: left;
+    width:100%;
+}
+.member_list li:hover {
+    background: #31708f none repeat scroll 0 0;
+    color: #fff;
+    cursor:pointer;
+}
+
+.container,.message_section{
+    height: calc(100vh - 100px);;
+}
+
+.chat_area p{
+    margin: 0;
+}
+
+.customActive{
+     background: #31708f ;
+     color: white;
+}
+.loadMore{
+    display: block;
+    text-align :center;
+}
+
+.updateChat{
+    background: #01708f;
+    width: 100%;
+}
+.updateChat{
+    /*background: #31708f;*/
+    width: 100%;
+}
+.btn-success{
+    margin:5px;
+}

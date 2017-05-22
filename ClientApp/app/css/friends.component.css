@@ -1,0 +1,36 @@
+
+.container{
+    max-height: calc(100vh - 100px);
+}
+.list-group{
+    border-radius: inherit;
+}
+.list-group .title{
+    background-color: #31708f;
+    border:2px solid #DDDDDD;
+    font-weight:bold;
+    color:#FFFFFF;
+    text-align: center;
+    border-top-left-radius:inherit;
+    border-top-right-radius:inherit;
+}
+.list-group-item img {
+    height:80px; 
+}
+
+.prj-name {
+    background-color: #31708f;  
+}
+.break{
+    width:100%;
+    margin:20px;
+}
+.name {
+    color: #31708f;  
+}
+.colFriends{
+     border-radius: 8px;
+}
+span{
+    display: block;
+}

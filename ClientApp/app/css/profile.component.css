@@ -1,0 +1,13 @@
+#profile-container{
+    margin: 90px auto 0 auto;
+}
+
+img{
+    display: block;
+    margin: 0 auto; 
+    max-height: 55vh; 
+}
+.panel-heading{
+    background-color: #31708f;
+    color: #ddd;
+}

@@ -1,0 +1,45 @@
+<div class="container">
+	<div class=" colFriends">
+		<ul class="list-group">
+			<li class="list-group-item title">
+				Friends
+				<div id="custom-search-input">
+					<div class="input-group">
+						<input type="text" class=" search-query form-control" id="findFriends" placeholder="Friends" #searchUsername />
+						<button  (click)="searchFriends(searchUsername.value)"class="btn" type="button">
+							<span class=" glyphicon glyphicon-search"></span>
+						</button>
+					</div>
+				</div>
+			</li>
+			<li *ngFor="let user of friends" class="list-group-item text-left">
+				<a *ngIf="user.Photo" class="fancybox" rel="gallery" href="{{user.Photo}}">
+					<img class="img-thumbnail" src="{{user.Photo}}">
+				</a>
+				<label class="name">{{user.FirstName}} {{user.LastName}}({{user.Username}})<br>
+				</label>
+				<label class="pull-right">
+					<a type="button" class="btn btn-success btn-xs" data-toggle="collapse" href="#{{user.Username}}">
+                        <i class="fa fa-toggle-down fa-2x"></i>
+                    </a>
+				</label>
+				<div class="collapse" id="{{user.Username}}">
+					<span *ngIf="user.Phone"><b>Phone:</b> {{user.Phone}}</span>
+					<span *ngIf="user.Email"><b>Email:</b> {{user.Email}}</span>
+					<span *ngIf="user.Birthdate"><b>Date of Birthday:</b> {{user.BirthDate}}</span>
+					<span *ngIf="user.About"><b>About:</b> {{user.About}} </span>
+				</div>
+				<div class="break"></div>
+			</li>
+			<li *ngIf="friends.length==0" class="list-group-item text-left">
+				Not found friends
+	 		</li>
+			<li *ngIf="twentyOrMoreFriends" (click)="getMoreFriends()" class="list-group-item text-left">
+				<button class="btn btn-block btn-primary">
+					<i class="glyphicon glyphicon-refresh"></i>
+					Load more...
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>

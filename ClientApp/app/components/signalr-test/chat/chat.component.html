@@ -1,0 +1,43 @@
+<table class="table table-bordered box">
+    <thead>
+        <tr>
+            <th><span class="chat-th">ID</span></th>
+            <th><span class="chat-th">Chat</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let chat of chats">
+            <td><span class="teamName">{{chat.id}}</span></td>
+            <td><span class="teamScore"> {{chat.name}} </span></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="chat-th" title="connection id">{{connection}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="chat-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let message of messages">
+                                <td>
+                                    <span class="user-time">{{message.Date | date:'shortTime' }} [{{message.ChatId}}] [{{message.SenderId}}]</span>
+                                </td>
+                                <td class="filterable-cell">
+                                    <span class="user-update"> {{message.Text}} </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

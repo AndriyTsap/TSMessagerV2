@@ -1,0 +1,63 @@
+<div class="main_section">
+	<div class="container">
+		<div class="chat_container">
+			<!--chats section-->
+			<div class="col-sm-3 chat_sidebar">
+				<div class="row">
+					<div id="custom-search-input">
+						<div class="input-group">
+							<input (keyup)="searchChat(chat.value)" type="text" class=" search-query form-control" placeholder="Chat" #chat>
+							<!--<button (click)="searchChat(chat.value)" class="btn btn-danger" type="button">
+								<span class=" glyphicon glyphicon-search"></span>
+							</button>-->
+						</div>
+					</div>
+					
+					<div class="member_list">
+						<ul class="list-unstyled">		
+							<li class="btn btn-primary updateChat"  (click)="getChats()">
+								<strong class="primary-font">Update</strong>
+							</li>	
+							<li  class="left clearfix" *ngFor="let chat of chats"  [ngClass]="{customActive: chat.id === currentChatId}" (click)="onSelect(chat.id)">
+								<input #id [value]="chat.id" style="display:none">
+								<div  (click)="getMessage(id.value)">
+									<strong class="primary-font">{{chat.name}}</strong>
+								</div>
+							</li>	
+						</ul>
+						<a *ngIf="chats.length>=20+chatOffset" (click)="getMoreChats()" class="loadMore">Load more...</a>
+					</div>
+				</div>
+			</div>
+			<!--messages section -->
+			<div class="col-sm-9 message_section">
+				<div class="row">
+					<div class="chat_area" #scrollChat>
+						<a *ngIf="messages.length>=20+messageOffset" (click)="getMoreMessages()" class="loadMore">Load more...</a>
+						<ul class="list-unstyled">
+							<li class="left clearfix" *ngFor="let message of messages">
+								<span *ngIf="message.Photo" class="chat-img1 pull-left">
+									<img  [src]="message.Photo" alt="" class="img-circle">
+								</span>
+								<div class="chat-body1 clearfix">
+									<strong *ngIf="message.senderFirstName" class="primary-font">{{message.senderFirstName}} {{message.senderLastName}}</strong>
+									<div *ngIf="message.Date" class="chat_time pull-right">{{message.date}}</div>
+									<p [innerHTML]="message.Text"></p>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="message_write">
+						<textarea class="form-control" placeholder="type a message" ([value])="cleanVar" #message></textarea>
+						<div class="chat_bottom">
+							<input class="pull-left upload_btn" id="file-upload" type="file"  #attachment/>
+							
+							<button (click)="sendMessage(message.value)" class="pull-right btn btn-success">Send</button>
+							<button (click)="updateMessage()" class="pull-right btn btn-success">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "PhotoGallery";
+}
+
+@section styles
+{
+    <link href="~/lib/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/css/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/lib/css/alertify.core.css" rel="stylesheet" />
+    <link href="~/lib/css/alertify.bootstrap.css" rel="stylesheet" />
+    @*<link href="~/lib/css/alertify.default.css" rel="stylesheet" />*@
+    <link href="~/ClientApp/app/css/site.css" rel="stylesheet" />
+}
+
+<script src="~/dist/vendor.js" asp-append-version="true"></script>
+<script src="~/lib/js/jquery.js"></script>
+<script src="~/lib/js/jquery.signalR.js"></script>
+<script src="~/lib/js/jquery.fancybox.pack.js"></script>
+<script src="~/lib/js/alertify.min.js"></script>
+<script src="signalr/hubs"></script>
+<div id="nav-separator"></div>
+
+<app >Loading...</app>
+
+@section scripts
+{
+    <script src="~/dist/main-client.js" asp-append-version="true"></script>
+}    
+
+@section customScript
+{
+    $(document).ready(function() {
+        $('.fancybox').fancybox();
+    });
+
+}

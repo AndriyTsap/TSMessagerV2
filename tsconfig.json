@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es6",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipDefaultLibCheck": true,
+    "lib": [ "es7", "dom" ],
+    "types": [ "node" ]
+  },
+  "exclude": [ "bin", "node_modules" ],
+  "atom": { "rewriteTsconfig": false }
+}
