@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsersService } from '../../shared/services/users.service';
-import { Chat, User } from '../../shared/interfaces';
-import { DataServiceSR } from '../../shared/services/data.service';
-import { SignalRConnectionStatus } from '../../shared/interfaces';
+import { FeedService } from '../../core/services/feed.service';
+import { Chat, User, SignalRConnectionStatus } from '../../core/interfaces';
+import { DataService } from '../../core/services/data.service';
 
 @Component({
     selector: 'signalr-test',
@@ -15,8 +14,8 @@ export class SignalRTestComponent implements OnInit {
     connectionId: string;
     error: any;
 
-    constructor(private dataService: DataServiceSR,
-        private usersService: UsersService) { }
+    constructor(private dataService: DataService,
+        private usersService: FeedService) { }
 
     ngOnInit(): void {
         let self = this;

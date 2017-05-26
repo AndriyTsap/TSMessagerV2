@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 import 'rxjs/add/operator/map';
 import {enableProdMode} from '@angular/core';
 
-import { UsersService } from '../../shared/services/users.service';
-import { SignalRConnectionStatus } from '../../shared/interfaces';
+import { FeedService } from '../../core/services/feed.service';
+import { SignalRConnectionStatus } from '../../core/interfaces';
 
 enableProdMode();
 import { MembershipService } from '../../core/services/membership.service';
@@ -13,13 +13,13 @@ import { User } from '../../core/domain/user';
 @Component({
     selector: 'app',
     templateUrl: './app.component.html',
-    providers: [UsersService]
+    providers: [FeedService]
 })
 export class AppComponent implements OnInit {
 
     constructor(public membershipService: MembershipService,
                 public location: Location,
-                private service: UsersService) { }
+                private service: FeedService) { }
 
     ngOnInit() {
 

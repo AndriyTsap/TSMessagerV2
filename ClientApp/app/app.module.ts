@@ -31,9 +31,8 @@ import { ChatComponent } from './components/signalr-test/chat/chat.component';
 import { GroupComponent } from './components/signalr-test/group/group.component';
 import { SignalRTestComponent } from './components/signalr-test/signalr-test.component';
 
-import { ConfigService } from './shared/services/config.service';
-import { DataServiceSR } from './shared/services/data.service';
-import { UsersService } from './shared/services/users.service';
+import { ConfigService } from './core/services/config.service';
+import { FeedService } from './core/services/feed.service';
 
 class AppBaseRequestOptions extends BaseRequestOptions {
     headers: Headers = new Headers();
@@ -67,7 +66,7 @@ class AppBaseRequestOptions extends BaseRequestOptions {
     ],
     declarations: [AppComponent, AlbumPhotosComponent, HomeComponent, ProfileComponent,
         MessagesComponent, PhotosComponent, FriendsComponent, FriendsSearchComponent, AlbumsComponent, ChatComponent, GroupComponent, SignalRTestComponent],
-    providers: [DataService, MembershipService, UtilityService, NotificationService, UserService, MessageService, ConfigService, DataServiceSR, UsersService,
+    providers: [DataService, MembershipService, UtilityService, NotificationService, UserService, MessageService, ConfigService, FeedService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: RequestOptions, useClass: AppBaseRequestOptions }],
     bootstrap: [AppComponent]

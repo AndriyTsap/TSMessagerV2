@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Message, Chat } from '../../../shared/interfaces';
-import { UsersService } from '../../../shared/services/users.service';
-import { DataServiceSR } from '../../../shared/services/data.service';
+import { Message, Chat } from '../../../core/interfaces';
+import { FeedService } from '../../../core/services/feed.service';
+import { DataService } from '../../../core/services/data.service';
 
 @Component({
     selector: 'group',
@@ -15,7 +15,7 @@ export class GroupComponent implements OnInit {
     subscribed: boolean;
     chatMessage: string = '';
 
-    constructor(private dataService: DataServiceSR) { }
+    constructor(private dataService: DataService) { }
 
     ngOnInit() { }
 

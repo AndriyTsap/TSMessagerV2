@@ -4,10 +4,10 @@ import { Http } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 
-import { UsersSignalR, UsersProxy, UsersClient, UsersServer, SignalRConnectionStatus, Message, Chat, User } from '../interfaces';
+import { FeedSignalR, FeedProxy, FeedClient, FeedServer, SignalRConnectionStatus, Message, Chat, User } from '../interfaces';
 
 @Injectable()
-export class UsersService {
+export class FeedService {
 
     currentState = SignalRConnectionStatus.Disconnected;
     connectionState: Observable<SignalRConnectionStatus>;
@@ -22,7 +22,7 @@ export class UsersService {
     private addUserSubject = new Subject<User>();
     private addChatMessageSubject = new Subject<Message>();
 
-    private server: UsersServer;
+    private server: FeedServer;
 
     constructor(private http: Http) {
         this.connectionState = this.connectionStateSubject.asObservable();
@@ -35,7 +35,7 @@ export class UsersService {
 
         $.connection.hub.logging = debug;
         
-        let connection = <UsersSignalR>$.connection;
+        let connection = <FeedSignalR>$.connection;
 
         // reference signalR hub named 'broadcaster'
         let hub = connection.broadcaster;
