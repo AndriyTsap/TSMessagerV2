@@ -28,8 +28,6 @@ Obj/
 
 # Visual Studio 2015 cache/options directory
 .vs/
-/wwwroot/dist/**
-/ClientApp/dist/**
 
 # Workaround for https://github.com/aspnet/JavaScriptServices/issues/235
 !/wwwroot/dist/_placeholder.txt
@@ -233,7 +231,6 @@ FakesAssemblies/
 
 node_modules/
 bower_components/
-wwwroot/lib/
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
