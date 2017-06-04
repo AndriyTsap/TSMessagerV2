@@ -31,6 +31,10 @@
 .colFriends{
      border-radius: 8px;
 }
-span{
+
+.collapse span{
     display: block;
+    border-top:1px solid black;
+    padding: 2px;
+    margin-top:2px;
 }

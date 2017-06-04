@@ -46,7 +46,7 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.0.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Server" Version="0.2.0-*" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Server" Version="0.2.0-preview2-22683" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>

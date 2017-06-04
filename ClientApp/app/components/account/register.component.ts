@@ -27,13 +27,14 @@ export class RegisterComponent implements OnInit {
         this.membershipService.register(this._newUser)
             .subscribe(res => {
                 _registrationResult.Succeeded = true;
-                _registrationResult.Message = res.text.toString();
+                //_registrationResult.Message = res.text.toString(); розкоментувати при закінченні з signalR
+                
 
             },
             error => console.error('Error: ' + error),
             () => {
                 if (_registrationResult.Succeeded) {
-                    this.notificationService.printSuccessMessage('Dear ' + this._newUser.Username + ', please login with your credentials');
+                    this.notificationService.printSuccessMessage('Dear ' + this._newUser.Username + ' your registration was successful, please login with your credentials');
                     this.router.navigate(['account/login']);
                 }
                 else {

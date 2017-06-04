@@ -55,8 +55,10 @@ export class FriendsSearchComponent {
                             "Photo": user.photo,
                             "About": user.about
                         });
-                    })
+                    }) 
+                    this.randomPeople.reverse();
                 })
+            
         }
     }
 
@@ -78,8 +80,11 @@ export class FriendsSearchComponent {
                     "Photo": user.photo,
                     "About": user.about
                 });
+            
             })
+            this.randomPeople.reverse();
         })
+        
     }
 
     getMorePeople() {
@@ -94,10 +99,7 @@ export class FriendsSearchComponent {
         this.messageService.createChat(id, chatName, "dialog")
             .subscribe(res => {
                 _updateResult.Succeeded = true;
-                _updateResult.Message = res.text.toString();
-            },
-            error => console.error('Error: ' + error),
-            () => {
+                //_updateResult.Message = res.text.toString(); розкоментувати при закінченні з signalR
                 if (_updateResult.Succeeded) {
                     this.notificationService.printSuccessMessage('Chat with ' + name + ' created!');
                     localStorage.setItem("currentChatId", _updateResult.Message)
@@ -107,6 +109,7 @@ export class FriendsSearchComponent {
                     console.log(_updateResult.Message)
                     this.notificationService.printErrorMessage("Chat isn't created!");
                 }
-            });
+            },
+            error => console.error('Error: ' + error));
     }
 }
