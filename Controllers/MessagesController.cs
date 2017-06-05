@@ -12,6 +12,8 @@ using PhotoGallery.Infrastructure.Services.Abstract;
 using PhotoGallery.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 using PhotoGallery.Hubs;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace PhotoGallery.Controllers
 {
@@ -24,10 +26,11 @@ namespace PhotoGallery.Controllers
         private readonly IJwtFormater _jwtFormater;
         private readonly IChatUserRepository _chatUserRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger _logger;
 
         public MessagesController(ILoggingRepository loggingRepository, IMessageRepository messageRepository,
             IChatRepository chatRepository, IChatUserRepository chatUserRepository, IUserRepository userRepository,
-            IJwtFormater jwtFormater, IConnectionManager signalRConnectionManager): base(signalRConnectionManager)
+            IJwtFormater jwtFormater, IConnectionManager signalRConnectionManager, ILogger<MessagesController> logger): base(signalRConnectionManager)
         {
             _chatRepository = chatRepository;
             _loggingRepository = loggingRepository;
@@ -35,6 +38,7 @@ namespace PhotoGallery.Controllers
             _chatUserRepository = chatUserRepository;
             _userRepository = userRepository;
             _jwtFormater = jwtFormater;
+            _logger = logger;
         }
 
         [Authorize]
@@ -328,7 +332,9 @@ namespace PhotoGallery.Controllers
             }
 
             result = new ObjectResult(removeResult);
-            //this.Clients.Group(message.ChatId.ToString()).AddChatMessage(message);
+            this.Clients.Group(message.ChatId.ToString()).AddChatMessage(message);
+            _logger.LogError("asdaaaaaaaaaasfdajkfAAAAASSDDDDDDaa");
+
             return result;
         }
 

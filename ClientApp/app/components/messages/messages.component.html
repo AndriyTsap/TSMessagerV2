@@ -12,18 +12,24 @@
 							</button>-->
 						</div>
 					</div>
-					
-					<div class="member_list">
-						<ul class="list-unstyled">		
-							<li class="btn btn-primary updateChat"  (click)="getChats()">
+
+					<div class="member_list chats">
+						<ul class="list-unstyled">
+							<li class="btn btn-primary updateChat" (click)="getChats()">
 								<strong class="primary-font">Update</strong>
-							</li>	
-							<li  class="left clearfix" *ngFor="let chat of chats"  [ngClass]="{customActive: chat.id === currentChatId}" (click)="onSelect(chat.id)">
+							</li>
+							<li class="left clearfix" *ngFor="let chat of chats" [ngClass]="{customActive: chat.id === currentChatId}" (click)="onSelect(chat.id); getMessage(id.value)">
 								<input #id [value]="chat.id" style="display:none">
-								<div  (click)="getMessage(id.value)">
-									<strong class="primary-font">{{chat.name}}</strong>
-								</div>
-							</li>	
+								<span>
+									{{chat.name}}
+									<button type="button" class="btn btn-default btn-primary subscribe-button" (click)="setSubscription(true, chat.id); $event.stopPropagation()" *ngIf="!chat.isSubscribed">
+										Subscribe
+									</button>
+									<button type="button" class="btn btn-danger btn-primary subscribe-button" (click)="setSubscription(false, chat.id); $event.stopPropagation()" *ngIf="chat.isSubscribed">
+										Unubscribe
+									</button>
+								</span>
+							</li>
 						</ul>
 						<a *ngIf="chats.length>=20+chatOffset" (click)="getMoreChats()" class="loadMore">Load more...</a>
 					</div>
@@ -41,7 +47,7 @@
 								</span>
 								<div class="chat-body1 clearfix">
 									<strong *ngIf="message.senderFirstName" class="primary-font">{{message.senderFirstName}} {{message.senderLastName}}</strong>
-									<div *ngIf="message.Date" class="chat_time pull-right">{{message.date}}</div>
+									<div *ngIf="message.Date" class="chat_time pull-right">{{message.Date}}</div>
 									<p [innerHTML]="message.Text"></p>
 								</div>
 							</li>
@@ -50,8 +56,8 @@
 					<div class="message_write">
 						<textarea class="form-control" placeholder="type a message" ([value])="cleanVar" #message></textarea>
 						<div class="chat_bottom">
-							<input class="pull-left upload_btn" id="file-upload" type="file"  #attachment/>
-							
+							<input class="pull-left upload_btn" id="file-upload" type="file" #attachment/>
+
 							<button (click)="sendMessage(message.value)" class="pull-right btn btn-success">Send</button>
 							<button (click)="updateMessage()" class="pull-right btn btn-success">Update</button>
 						</div>

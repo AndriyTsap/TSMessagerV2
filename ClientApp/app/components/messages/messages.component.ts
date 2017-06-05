@@ -5,7 +5,8 @@ import { NotificationService } from '../../core/services/notification.service';
 import { OperationResult } from "../../core/domain/operationResult";
 import { Message } from "../../core/domain/message";
 import { Chat } from "../../core/domain/chat";
-//import { SignalRConnectionStatus, MessageR, ChatR } from './../../core/interfaces';
+import { FeedService } from '../../core/services/feed.service';
+import { SignalRConnectionStatus } from '../../core/interfaces';
 
 @Component({
     selector: 'messages',
@@ -20,20 +21,20 @@ export class MessagesComponent {
     musicFormats = "mp3, ogg, wav";
     videoFormats = "mp4, webm, avi, 3gp";
     chats: Chat[];
-    messages: Message[];
+    messages = [];
     currentChatId: number;
     messageOffset: number;
     chatOffset: number;
     cleanVar: string = "";
-
-    //subscribed: boolean;
-    //connectionId: string;
+    subscribed: boolean;
+    chatMessage: string = '';
+    connectionId: string;
+    error: any;
 
     constructor(public messageService: MessageService,
-        public userService: UserService,
+        public userService: UserService, private feedService: FeedService,
         public notificationService: NotificationService) {
         this.chats = [];
-        this.messages = [];
         this.messageOffset = 0;
         this.currentChatId = +localStorage.getItem("currentChatId");
         this.chatOffset = 0;
@@ -43,30 +44,57 @@ export class MessagesComponent {
         this.messageService.setToken(localStorage.getItem("token"));
         this.getChats();
         //for signalR
+        let self = this;
 
-        /*
-       this.messageService.start(true).subscribe(
-           null,
-           error => console.log('Error on init: ' + error));
-   
-       //
-       this.listenForConnection();
+        self.listenForConnection();
 
-      
-       this.messageService.connectionState
-           .subscribe(
-           connectionState => {
-               if (connectionState == SignalRConnectionStatus.Connected) {
-                   console.log('Connected!');
-                   //self.getChats();
-               } else {
-                   console.log(connectionState.toString());
-               }
-           },
-           error => {
-               console.log(error);
-           });*/
-        //    
+        this.feedService.start(true).subscribe(
+            null,
+            error => console.log('Error on init: ' + error));
+
+        self.feedService.connectionState
+            .subscribe(
+            connectionState => {
+                if (connectionState == SignalRConnectionStatus.Connected) {
+                    console.log('Connected!');
+                } else {
+                    console.log(connectionState.toString());
+                }
+            },
+            error => {
+                this.error = error;
+                console.log(error);
+            });
+
+        self.feedService.addChatMessage.subscribe(
+            message => {
+                 if(!self.messages)
+                    self.messages = new Array<Message>();
+                this.messages.push(message);
+
+                console.log(this.messages);
+            }
+        )
+
+    }
+
+    setSubscription(val: boolean, chatId: number) {
+        this.chats.filter(chat => chat.id == this.currentChatId)[0].isSubscribed = val;
+       
+        let subscription =
+            {
+                subscribe: val,
+                chatId: chatId
+            }
+
+        this.updateSubscription(subscription);
+    }
+
+    updateSubscription(subscription: any) {
+        if (<boolean>subscription.subscribe === true)
+            this.feedService.subscribeToChat(<number>subscription.chatId);
+        else
+            this.feedService.unsubscribeFromChat(<number>subscription.chatId);
     }
 
     ngAfterViewChecked() {
@@ -75,7 +103,7 @@ export class MessagesComponent {
 
     scrollToBottom(): void {
         try {
-            this.chatScrollContainer.nativeElement.scrollTop = 10000000000;//this.chatScrollContainer.nativeElement.scrollHeight;
+            this.chatScrollContainer.nativeElement.scrollTop = 10000000000;
         } catch (err) { }
     }
 
@@ -94,6 +122,10 @@ export class MessagesComponent {
             });
     }
 
+    subscribe(chatId) {
+
+    }
+
     getMessage(currentChatId: number) {
         this.messages = [];
         this.messageService.getMessageByChatId(currentChatId, this.messageOffset)
@@ -108,7 +140,7 @@ export class MessagesComponent {
                     Text: (!data[0].text.includes("/#/")) ? data[0].Text : this.parse(data[0].Text),
                     SenderFirstName: data[0].firstName,
                     SenderLastName: data[0].lastName,
-                    Photo: data[0].photo
+                    Photo: '\\images\\' + data[0].photo
                 });
                 for (let i = 1; i < data.length; i++) {
                     theSameSenderInLine = (data[i - 1].SenderId == data[i].SenderId);
@@ -155,10 +187,10 @@ export class MessagesComponent {
             this.messageService.send(newMessage, +this.currentChatId)
                 .subscribe(res => {
                     _sendResult.Succeeded = true;
-                    _sendResult.Message = res.text.toString();
 
                     if (_sendResult.Succeeded) {
-                        this.getMessage(this.currentChatId)
+                        if(!this.chats.filter(chat => chat.id == this.currentChatId)[0].isSubscribed)
+                            this.messages.push({Text: (!newMessage.includes("/#/")) ? newMessage : this.parse(newMessage), ChatId: this.currentChatId})
                         this.cleanVar = " ";
                     }
                     else {
@@ -229,11 +261,10 @@ export class MessagesComponent {
         this.getMessage(this.currentChatId);
     }
 
-    /*
-    //for signalR
+
     listenForConnection() {
         // Listen for connected / disconnected events
-        this.messageService.setConnectionId.subscribe(
+        this.feedService.setConnectionId.subscribe(
             id => {
                 console.log(id);
                 this.connectionId = id;
@@ -241,23 +272,25 @@ export class MessagesComponent {
         );
     }
 
-    listenForMessages(){//only in console
-        this.messageService.addMessage.subscribe(
+    listenForMessages() {//only in console
+        this.feedService.addChatMessage.subscribe(
             message => {
-                console.log('received message..');
+                console.log('received..');
                 console.log(message);
-                //update view
+                if (!this.messages)
+                    this.messages = new Array<Message>();
+                this.messages.unshift(message);
             }
         )
     }
 
-    listenForChats(){//only in console
-        this.messageService.addChat.subscribe(
+    listenForChats() {//only in console
+        this.feedService.addUser.subscribe(
             chat => {
                 console.log('received chat..');
                 console.log(chat);
                 //update view
             }
         )
-    }*/
+    }
 }

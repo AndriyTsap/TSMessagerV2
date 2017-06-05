@@ -52,7 +52,7 @@ export class FriendsSearchComponent {
                             "LastName": user.lastName,
                             "Phone": user.phone,
                             "BirthDate": user.birthDate,
-                            "Photo": user.photo,
+                            "Photo": '\\images\\' + user.photo,
                             "About": user.about
                         });
                     }) 

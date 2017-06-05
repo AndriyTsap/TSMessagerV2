@@ -13,12 +13,12 @@ export class ChatComponent implements OnInit {
     @Input() connection: string;
     messages: Message[];
 
-    constructor(private usersService: FeedService) { }
+    constructor(private feedService: FeedService) { }
 
     ngOnInit(): void {
         let self = this;
 
-        self.usersService.addChatMessage.subscribe(
+        self.feedService.addChatMessage.subscribe(
             message => {
                 console.log('received..');
                 console.log(message);

@@ -4,7 +4,6 @@
 .main_section .container{
     height: 100%;
 }
-
 .member_list .chat-body {
     margin-left: 47px;
     margin-top: 0;
@@ -18,10 +17,6 @@
 .chat-img img {
     height: 34px;
     width: 34px;
-}
-.member_list li {
-    border-bottom: 1px solid #dddddd;
-    padding: 6px;
 }
 .member_list li:last-child {
     border-bottom:none;
@@ -67,13 +62,6 @@
 
     }
 }
-.member_list { 
-    max-height: calc(100vh - 132px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    border: 1px solid #dddddd;
-}
-
 .message_section {
     border: 1px solid #dddddd;
 }
@@ -127,6 +115,39 @@
     float: left;
     margin-top: 13px;
     width: 100%;
+}
+.chats {
+    list-style-type: none;
+}
+.chats li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    border-radius: 4px;
+}
+.chats .text {
+    position: relative;
+    top: -3px;
+}
+button {
+    font-family: Arial;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+}
+button:hover {
+    background-color: #cfd8dc;
+}
+button.subscribe-button {
+    float:right;
+    margin-top: 2px;
+    margin-right: .8em;
+    color:white;
+}
+.chat {
+    vertical-align: middle;
 }
 .upload_btn {
     color: #777777;

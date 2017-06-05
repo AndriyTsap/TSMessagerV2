@@ -13,11 +13,7 @@ export class UserService {
     private _friendsGetAPI: string = 'api/user/friends?offset=';
     private _userEditPersonalDataAPI: string = 'api/user/editPersonalData';
     private _searchAPI: string = 'api/user/search?username=';
-<<<<<<< HEAD
     private _searchFriendsAPI: string = 'api/user/friends/search?username=';
-=======
-    private _searchFriendsAPI: string = 'api/user/friend/search?username=';
->>>>>>> 4bafd82ccd8135aa762f618e67c36440728f6fe0
     private _checkOnFriendshipAPI: string = 'api/user/checkOnFriendship?id=';
     private _uploadPhotoAPI: string = "api/photos/upload";
 
