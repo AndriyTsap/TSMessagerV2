@@ -1,13 +1,13 @@
 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 toppad" >
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h3 class="panel-title">{{user.Username}}</h3>
+			<h3 class="panel-title">{{user.username}}</h3>
 		</div>
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-sm-4 col-md-4 col-lg-4 " align="center">
-                    <a *ngIf="user.Photo" class="fancybox" rel="gallery" [href]="user.Photo">
-                        <img  [src]="user.Photo" class="img-responsive thumbnail"> 
+                    <a *ngIf="user.photo" class="fancybox" rel="gallery" [href]="user.photo">
+                        <img  [src]="user.photo" class="img-responsive thumbnail"> 
                     </a>
 
                 </div>
@@ -16,28 +16,28 @@
 						<tbody>
 							<tr>
 								<td>FirstName: </td>
-								<td>{{user.FirstName}}</td>
+								<td>{{user.firstName}}</td>
 							</tr>
 							<tr>
 								<td>LastName: </td>
-								<td>{{user.LastName}}</td>
+								<td>{{user.lastName}}</td>
 							</tr>
 							<tr>
 								<td>Phone: </td>
-								<td>{{user.Phone}}</td>
+								<td>{{user.phone}}</td>
 							</tr>
 							
 							<tr>
 								<td>Email</td>
-								<td>{{user.Email}}</td>
+								<td>{{user.email}}</td>
 							</tr>
 							<tr>
 								<td>Date of Birthday: </td>
-								<td>{{user.BirthDate}}</td>
+								<td>{{user.birthDate}}</td>
 							</tr>
 							<tr>
 								<td>About:</td>
-								<td>{{user.About}} </td>
+								<td>{{user.about}} </td>
 							</tr>
 						</tbody>
 					</table>
@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     <form class="form col-md-12 center-block" #editForm="ngForm">
                         <div class="form-group">
-                            <input type="email" class="form-control input-lg" placeholder="Email"  [(ngModel)]="user.Email"
+                            <input type="email" class="form-control input-lg" placeholder="Email"  [(ngModel)]="user.email"
                                 name="email" #email="ngModel">
                             <div [hidden]="email.valid || email.untouched || email==''" class="alert alert-danger">
                                 Email is not valid
@@ -78,11 +78,11 @@
                         </div>
              
                         <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="FirstName"  [(ngModel)]="user.FirstName"
+                            <input type="text" class="form-control input-lg" placeholder="FirstName"  [(ngModel)]="user.firstName"
                                 name="firstName" #firstName="ngModel">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="LastName"  [(ngModel)]="user.LastName"
+                            <input type="text" class="form-control input-lg" placeholder="LastName"  [(ngModel)]="user.lastName"
                                 name="lastName" #lastName="ngModel">
                         </div>
                         <div class="form-group">
@@ -90,18 +90,18 @@
                                 name="photo" #photo>
                         </div>
                         <div class="form-group">
-                            <input type="date" class="form-control input-lg" placeholder="BirthDate" [(ngModel)]="user.BirthDate"
+                            <input type="date" class="form-control input-lg" placeholder="BirthDate" [(ngModel)]="user.birthDate"
                                 name="birthDate" #birthdate="ngModel">
                         </div>
                         <div class="form-group">
-                            <input type="tel" pattern='[\+]\d{12}' class="form-control input-lg" placeholder="Phone"  [(ngModel)]="user.Phone"
+                            <input type="tel" pattern='[\+]\d{12}' class="form-control input-lg" placeholder="Phone"  [(ngModel)]="user.phone"
                                 name="phone" #phone="ngModel">
                             <div [hidden]="phone.valid || phone.untouched || phone==''" class="alert alert-danger">
                                 Phone is not valid! Right format +380973243295
                             </div>    
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control input-lg" placeholder="About"  [(ngModel)]="user.About"
+                            <textarea class="form-control input-lg" placeholder="About"  [(ngModel)]="user.about"
                                 name="about" #about="ngModel" ></textarea>
                         </div>
                      

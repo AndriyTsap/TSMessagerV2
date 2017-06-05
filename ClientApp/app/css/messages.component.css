@@ -1,5 +1,8 @@
 .main_section{
-    height: calc(100vh - 100px);
+    height: calc(100vh - 60px);
+}
+.main_section .container{
+    height: 100%;
 }
 
 .member_list .chat-body {
@@ -30,6 +33,17 @@
         .input-group{
             display: block;
         }
+        .chat_sidebar{
+            max-height: 250px;
+        }
+        .chat_container .member_list{
+            max-height: 200px;
+        }
+}
+@media (max-width: 505px) {
+    #file-upload{
+        width: 100%;
+    }
 }
 @media (min-width: 768px) {
     .member_list {
@@ -53,7 +67,6 @@
 
     }
 }
-
 .member_list { 
     max-height: calc(100vh - 132px);
     overflow-x: hidden;
@@ -63,6 +76,9 @@
 
 .message_section {
     border: 1px solid #dddddd;
+}
+.chat_container{
+    height:100%;
 }
 .chat_sidebar{
     height:100%;
@@ -99,7 +115,7 @@
 .message_write {
     background: #f5f3f3 none repeat scroll 0 0;
     float: left;
-    padding: 15px;
+    padding: 15px 15px 4px 15px;
     width: 100%;
 }
 
@@ -152,4 +168,9 @@
 }
 .btn-success{
     margin:5px;
+}
+
+
+#file-upload{
+    margin-top: 11px;
 }
