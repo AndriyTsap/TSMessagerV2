@@ -6,15 +6,15 @@ import { UserFull } from '../domain/user-full';
 
 @Injectable()
 export class UserService {
-    private _userGetAllAPI: string = 'api/users?offset=';
-    private _userGetByIdAPI: string = 'api/users/getById?id=';
-    private _userGetByTokenAPI: string = 'api/users/getByToken';
-    private _userDelete: string = 'api/users/delete';
-    private _friendsGetAPI: string = 'api/users/friends?offset=';
-    private _userEditPersonalDataAPI: string = 'api/users/editPersonalData';
-    private _searchAPI: string = 'api/users/search?username=';
-    private _searchFriendsAPI: string = 'api/users/friends/search?username=';
-    private _checkOnFriendshipAPI: string = 'api/users/checkOnFriendship?id=';
+    private _userGetAllAPI: string = 'api/user?offset=';
+    private _userGetByIdAPI: string = 'api/user/getById?id=';
+    private _userGetByTokenAPI: string = 'api/user/getByToken';
+    private _userDelete: string = 'api/user/delete';
+    private _friendsGetAPI: string = 'api/user/friends?offset=';
+    private _userEditPersonalDataAPI: string = 'api/user/editPersonalData';
+    private _searchAPI: string = 'api/user/search?username=';
+    private _searchFriendsAPI: string = 'api/user/friends/search?username=';
+    private _checkOnFriendshipAPI: string = 'api/user/checkOnFriendship?id=';
     private _uploadPhotoAPI: string = "api/photos/upload";
 
 

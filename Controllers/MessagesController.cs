@@ -4,21 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using PhotoGallery.Entities;
-//using PhotoGallery.Hubs;
 using PhotoGallery.Infrastructure.Core;
 using PhotoGallery.Infrastructure.Repositories.Abstract;
 using PhotoGallery.Infrastructure.Services.Abstract;
 using PhotoGallery.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
+using PhotoGallery.Hubs;
 
 namespace PhotoGallery.Controllers
 {
     [Route("api/[controller]")]
-    public class MessagesController: Controller //: ApiHubController<Broadcaster>
+    public class MessagesController : ApiHubController<Broadcaster>
     {
-        private readonly IMessageRepository _messageRepository;    
+        private readonly IMessageRepository _messageRepository;
         private readonly ILoggingRepository _loggingRepository;
         private readonly IChatRepository _chatRepository;
         private readonly IJwtFormater _jwtFormater;
@@ -27,7 +27,7 @@ namespace PhotoGallery.Controllers
 
         public MessagesController(ILoggingRepository loggingRepository, IMessageRepository messageRepository,
             IChatRepository chatRepository, IChatUserRepository chatUserRepository, IUserRepository userRepository,
-            IJwtFormater jwtFormater)//: base(signalRConnectionManager)
+            IJwtFormater jwtFormater, IConnectionManager signalRConnectionManager): base(signalRConnectionManager)
         {
             _chatRepository = chatRepository;
             _loggingRepository = loggingRepository;
@@ -37,7 +37,6 @@ namespace PhotoGallery.Controllers
             _jwtFormater = jwtFormater;
         }
 
-        // Get api/messages?offset=20
         [Authorize]
         [HttpGet]
         public async Task<IEnumerable<Message>> GetAll(int offset = 0)
@@ -66,11 +65,10 @@ namespace PhotoGallery.Controllers
                 });
                 _loggingRepository.Commit();
             }
-            
-            return messages.Skip(messages.Count()-offset-20).Take(20);
+
+            return messages.Skip(messages.Count() - offset - 20).Take(20);
         }
 
-        // Get api/messages/chats?offset=20
         [Authorize]
         [HttpGet("chats")]
         public async Task<IEnumerable<dynamic>> GetAllDialogs(int offset = 0)
@@ -88,14 +86,14 @@ namespace PhotoGallery.Controllers
             List<dynamic> res = new List<dynamic>();
             foreach (var chat in chats)
             {
-                res.Add(new {chat.Id,chat.Name});
+                res.Add(new { chat.Id, chat.Name });
             }
             return res.Skip(chats.Count() - offset - 20).Take(20);
         }
-        // Get api/messages/chats/search?name=NameChat&offset=20
+
         [Authorize]
         [HttpGet("chats/search")]
-        public async Task<IEnumerable<dynamic>> SearchDialogs(string name,int offset)
+        public async Task<IEnumerable<dynamic>> SearchDialogs(string name, int offset)
         {
             var authenticationHeader = Request?.Headers["Authorization"];
             var token = authenticationHeader?.FirstOrDefault().Split(' ')[1];
@@ -107,22 +105,23 @@ namespace PhotoGallery.Controllers
             var chatIds = chatUsers.Select(cu => cu.ChatId);
             var chats = await _chatRepository.FindByAsync(c => chatIds.Contains(c.Id));
             List<dynamic> res = new List<dynamic>();
-            
+
             foreach (var chat in chats)
             {
-                if(chat.Name.ToLower().Contains(name.ToLower())){
-                    res.Add(new {chat.Id,chat.Name});
+                if (chat.Name.ToLower().Contains(name.ToLower()))
+                {
+                    res.Add(new { chat.Id, chat.Name });
                 }
             }
 
-            return res.Skip(chats.Count()-offset-20).Take(20);
+            return res.Skip(chats.Count() - offset - 20).Take(20);
         }
 
-        
+
         //Get api/messages/createChat?id=receiver&name=SomeChat&type=dialog
         [Authorize]
         [HttpPost("createChat")]//now work work yet
-        public IActionResult CreateChat(int id,string name, string type)
+        public IActionResult CreateChat(int id, string name, string type)
         {
             IActionResult result = new ObjectResult(false);
             GenericResult createResult = null;
@@ -161,7 +160,7 @@ namespace PhotoGallery.Controllers
                 createResult = new GenericResult()
                 {
                     Succeeded = true,
-                    Message = chat.Id+""
+                    Message = chat.Id + ""
                 };
             }
             catch (Exception e)
@@ -238,13 +237,13 @@ namespace PhotoGallery.Controllers
 
             var userChats = await _chatUserRepository.FindByAsync(cu => cu.UserId == user.Id);
             var chatIds = userChats.Select(uc => uc.ChatId).ToList();
-            
+
             if (!chatIds.Contains(chatId))
             {
                 _loggingRepository.Add(new Error()
                 {
                     Severity = "Warning",
-                    Message = "Request from "+subject+" to not his chat",
+                    Message = "Request from " + subject + " to not his chat",
                     DateCreated = DateTime.Now
                 });
                 _loggingRepository.Commit();
@@ -253,7 +252,7 @@ namespace PhotoGallery.Controllers
 
             try
             {
-                messages =  await _messageRepository
+                messages = await _messageRepository
                     .FindByAsync(m => m.ChatId == chatId);
             }
             catch (Exception ex)
@@ -274,7 +273,7 @@ namespace PhotoGallery.Controllers
                 sender = _userRepository.GetSingle(u => u.Id == m.SenderId);
                 return new { m.Id, m.ChatId, m.SenderId, m.Text, m.Date, sender.FirstName, sender.LastName, sender.Photo };
             }).ToList();
-            return res.Skip(messages.Count() - offset -20).Take(20);
+            return res.Skip(messages.Count() - offset - 20).Take(20);
         }
 
         // Post api/messages
@@ -296,7 +295,7 @@ namespace PhotoGallery.Controllers
                 Text = mVMessage.Text,
                 SenderId = user.Id,
                 ChatId = mVMessage.ChatId,
-                Date=DateTime.Now.ToString()
+                Date = DateTime.Now.ToString()
             };
 
             try
