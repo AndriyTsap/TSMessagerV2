@@ -8,6 +8,9 @@ import { FeedSignalR, FeedProxy, FeedClient, FeedServer, SignalRConnectionStatus
 
 @Injectable()
 export class FeedService {
+    imageFormats = "jpg, jpeg, png,gif";
+    musicFormats = "mp3, ogg, wav";
+    videoFormats = "mp4, webm, avi, 3gp";
 
     currentState = SignalRConnectionStatus.Disconnected;
     connectionState: Observable<SignalRConnectionStatus>;
@@ -74,6 +77,8 @@ export class FeedService {
     }
 
     private onAddChatMessage(chatMessage: Message) {
+        let newChatMessage= chatMessage;
+        newChatMessage.Text= this.parse(chatMessage.Text);
         this.addChatMessageSubject.next(chatMessage);
     }
 
@@ -85,4 +90,35 @@ export class FeedService {
     public unsubscribeFromChat(chatId: number) {
         this.server.unsubscribe(chatId);
     }
+
+    parse(message: string) {
+        
+        let splitedMessage = message.split("/#/");
+        let output = "";
+        if (splitedMessage[0]) {
+            output += "<span>" + splitedMessage[0] + "</span><br>";
+        }
+        let format = splitedMessage[1].substr(splitedMessage[1].length - 5).split(".")[1];
+        console.log()
+        if (this.imageFormats.includes(format.toLowerCase())) {
+            output += "<a class='fancybox' rel='gallery' href='" + splitedMessage[1] + "'>" +
+                "<img class='img-responsive thumbnail' src='" + splitedMessage[1] + "'></a>";
+        } else if (this.musicFormats.includes(format.toLowerCase())) {
+
+            output += "<span>" + splitedMessage[1].split("!!!")[1] + "</span><br>" +
+                "<audio style='width:100%'  controls>" +
+                "<source src='" + splitedMessage[1] + "'></audio>";
+        }
+        else if (this.videoFormats.includes(format.toLowerCase())) {
+
+            output += "<span>" + splitedMessage[1].split("!!!")[1] + "</span><br>" +
+                "<video width='100%' controls>" +
+                "<source src='" + splitedMessage[1] + "'></video>";
+        }
+        else {
+            output += " <a href='" + splitedMessage[1] + "' download>" + splitedMessage[1].split("!!!")[1] + "</a>";
+        }
+        return output
+    }
+
 }
