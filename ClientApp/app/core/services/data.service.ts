@@ -1,4 +1,4 @@
-﻿import { Http, Response, Headers } from '@angular/http';
+﻿import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ConfigService } from './config.service';
@@ -52,8 +52,9 @@ export class DataService {
     post(data?: any, mapJson: boolean = true) {
         var headers = new Headers();
         headers.append("Content-Type", "application/json")
+        
         if (mapJson)
-            return this.http.post(this._baseUri, data, headers)
+            return this.http.post(this._baseUri, data, new RequestOptions({headers: headers}))
                 .map(response => <any>(<Response>response).json());
         else
             return this.http.post(this._baseUri, data);

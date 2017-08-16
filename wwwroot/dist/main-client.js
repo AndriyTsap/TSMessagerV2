@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f1e07989a780d6a99768"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b329987787f8640fef44"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1029,7 +1029,7 @@ let DataService = class DataService {
         var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["Headers"]();
         headers.append("Content-Type", "application/json");
         if (mapJson)
-            return this.http.post(this._baseUri, data, headers)
+            return this.http.post(this._baseUri, data, new __WEBPACK_IMPORTED_MODULE_0__angular_http__["RequestOptions"]({ headers: headers }))
                 .map(response => response.json());
         else
             return this.http.post(this._baseUri, data);
@@ -9187,53 +9187,10 @@ Observable_1.Observable.prototype.map = map_1.map;
 "use strict";
 
 var root_1 = __webpack_require__(127);
-/* tslint:enable:max-line-length */
+/* tslint:disable:max-line-length */
 /**
- * Converts an Observable sequence to a ES2015 compliant promise.
- *
- * @example
- * // Using normal ES2015
- * let source = Rx.Observable
- *   .of(42)
- *   .toPromise();
- *
- * source.then((value) => console.log('Value: %s', value));
- * // => Value: 42
- *
- * // Rejected Promise
- * // Using normal ES2015
- * let source = Rx.Observable
- *   .throw(new Error('woops'))
- *   .toPromise();
- *
- * source
- *   .then((value) => console.log('Value: %s', value))
- *   .catch((err) => console.log('Error: %s', err));
- * // => Error: Error: woops
- *
- * // Setting via the config
- * Rx.config.Promise = RSVP.Promise;
- *
- * let source = Rx.Observable
- *   .of(42)
- *   .toPromise();
- *
- * source.then((value) => console.log('Value: %s', value));
- * // => Value: 42
- *
- * // Setting via the method
- * let source = Rx.Observable
- *   .of(42)
- *   .toPromise(RSVP.Promise);
- *
- * source.then((value) => console.log('Value: %s', value));
- * // => Value: 42
- *
- * @param PromiseCtor promise The constructor of the promise. If not provided,
- * it will look for a constructor first in Rx.config.Promise then fall back to
- * the native Promise constructor if available.
- * @return {Promise<T>} An ES2015 compatible promise with the last value from
- * the observable sequence.
+ * @param PromiseCtor
+ * @return {Promise<T>}
  * @method toPromise
  * @owner Observable
  */
