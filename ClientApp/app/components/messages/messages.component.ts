@@ -70,8 +70,20 @@ export class MessagesComponent {
             message => {
                  if(!self.messages)
                     self.messages = new Array<Message>();
+                    
                 this.messages.push(message);
-
+                //let newMessage=message;
+                //newMessage.Text = this.parse(message.Text);
+                console.log(message);
+                console.log(message.Text);
+                //this.updateMessage()
+                //console.log(newMessage);
+                /*this.messages.push({ChatId: message.ChatId, 
+                                    Date:  message.Date,
+                                    Id: message.Id, 
+                                    SenderId:message.SenderId,
+                                    Text: this.parse(message.Text.toString()) });
+                //message.Text */
                 console.log(this.messages);
             }
         )
@@ -140,7 +152,7 @@ export class MessagesComponent {
                     Text: (!data[0].text.includes("/#/")) ? data[0].Text : this.parse(data[0].Text),
                     SenderFirstName: data[0].firstName,
                     SenderLastName: data[0].lastName,
-                    Photo: '\\images\\' + data[0].photo
+                    Photo: data[0].photo
                 });
                 for (let i = 1; i < data.length; i++) {
                     theSameSenderInLine = (data[i - 1].SenderId == data[i].SenderId);
