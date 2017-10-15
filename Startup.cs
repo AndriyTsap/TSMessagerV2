@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
 using PhotoGallery.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PhotoGallery.Infrastructure.Repositories;
 using PhotoGallery.Infrastructure.Services;
 using PhotoGallery.Infrastructure.Mappings;
 using PhotoGallery.Infrastructure.Core;
+using PhotoGallery.Hubs;
 using System.Security.Claims;
 using Microsoft.AspNetCore.StaticFiles;
 using System.IO;
@@ -57,7 +57,7 @@ namespace PhotoGallery
         {
             services.AddDbContext<PhotoGalleryContext>(options =>
                 options.UseSqlServer(Configuration["Data:PhotoGalleryConnection:ConnectionString"]));
-            
+
             services.AddScoped<MockData>();
             // Repositories
             services.AddScoped<signalr_test.Data.IChatRepository, MockChatRepository>();
@@ -98,8 +98,21 @@ namespace PhotoGallery
                 });
 
             });
+
+            services.AddAuthentication(options =>
+            {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                    options.Authority = "http://localhost:5000/";
+                    options.Audience = "resource-server";
+                    options.RequireHttpsMetadata = false;
+            })
+            .AddCookie();
+
             // Add framework services.
-            services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
+            services.AddSignalR();
 
             services.AddMvc();
         }
@@ -186,19 +199,6 @@ namespace PhotoGallery
             app.UseFileServer(_fileServerOptions);
             app.UseFileServer(_fileServerOptions);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-            });
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
-
             var options = new TokenProviderOptions
             {
                 Audience = "ExampleAudience",
@@ -219,8 +219,10 @@ namespace PhotoGallery
                 //     defaults: new { controller = "Home", action = "Index" });                
             });
 
+            app.UseSignalR(routes => {
+                routes.MapHub<Broadcaster>("broadcaster");
+            });
             app.UseWebSockets();
-            app.UseSignalR();
         }
     }
 }

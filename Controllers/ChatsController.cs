@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR;
 using signalr_test.Data;
 using PhotoGallery.Hubs;
 using signalr_test.Models;
@@ -13,9 +13,8 @@ namespace PhotoGallery.Controllers
     {
 
         private IChatRepository _chatRepository;
-        public ChatsController(IConnectionManager signalRConnectionManager, 
-            IChatRepository chatRepository)
-        : base(signalRConnectionManager)
+        public ChatsController(IChatRepository chatRepository)
+        : base()
         {
             _chatRepository = chatRepository;
         }

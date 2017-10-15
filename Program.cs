@@ -14,9 +14,7 @@ namespace PhotoGallery
                 .Build();
 
             var host = new WebHostBuilder()
-                .UseKestrel(options => {
-                    options.ThreadCount = 1;
-                })
+                .UseKestrel()
                 .UseConfiguration(config)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()

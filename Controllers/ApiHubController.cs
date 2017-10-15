@@ -1,19 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.SignalR.Hubs;
-using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR; 
+using PhotoGallery.Hubs;
 
 namespace PhotoGallery.Controllers
 {
     public abstract class ApiHubController<T> : Controller
         where T : Hub
     {
-        private readonly IHubContext _hub;
-        public IHubConnectionContext<dynamic> Clients { get; private set; }
+        private readonly IHubContext<Broadcaster> _hub;
+        public IHubClients Clients { get; private set; }
         public IGroupManager Groups { get; private set; }
-        protected ApiHubController(IConnectionManager signalRConnectionManager)
+        protected ApiHubController()
         {
-            var _hub = signalRConnectionManager.GetHubContext<T>();
             Clients = _hub.Clients;
             Groups = _hub.Groups;
         }

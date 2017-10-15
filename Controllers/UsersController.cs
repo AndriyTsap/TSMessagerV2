@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR;
 using System.Linq;
 using signalr_test.Data;
 using PhotoGallery.Hubs;
@@ -15,10 +15,10 @@ namespace PhotoGallery.Controllers
         IUserRepository _userRepository;
         IChatRepository _chatRepository;
         IChatUserRepository _chatUserRepository;
-        public UsersController(IConnectionManager signalRConnectionManager, 
+        public UsersController(
             IChatRepository chatRepository, 
             IUserRepository userRepository) 
-        : base(signalRConnectionManager)
+        : base()
         {
             _chatRepository = chatRepository;
             _userRepository = userRepository;
@@ -38,7 +38,7 @@ namespace PhotoGallery.Controllers
         {
             _chatUserRepository.Add(new ChatUser() { UserId = userId, ChatId = chatId });
            
-            await Clients.Group(chatId.ToString()).AddUser(userId.ToString());
+            await Clients.Group(chatId.ToString()).InvokeAsync("AddUser", userId.ToString());
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR.Infrastructure;
 using PhotoGallery.Entities;
 using PhotoGallery.Infrastructure.Core;
 using PhotoGallery.Infrastructure.Repositories.Abstract;
@@ -30,7 +29,7 @@ namespace PhotoGallery.Controllers
 
         public MessagesController(ILoggingRepository loggingRepository, IMessageRepository messageRepository,
             IChatRepository chatRepository, IChatUserRepository chatUserRepository, IUserRepository userRepository,
-            IJwtFormater jwtFormater, IConnectionManager signalRConnectionManager, ILogger<MessagesController> logger): base(signalRConnectionManager)
+            IJwtFormater jwtFormater, ILogger<MessagesController> logger): base()
         {
             _chatRepository = chatRepository;
             _loggingRepository = loggingRepository;
@@ -332,8 +331,7 @@ namespace PhotoGallery.Controllers
             }
 
             result = new ObjectResult(removeResult);
-            this.Clients.Group(message.ChatId.ToString()).AddChatMessage(message);
-            _logger.LogError("asdaaaaaaaaaasfdajkfAAAAASSDDDDDDaa");
+            this.Clients.Group(message.ChatId.ToString()).InvokeAsync("AddChatMessage",message);
 
             return result;
         }
